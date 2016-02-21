@@ -245,3 +245,37 @@
 ;; My understanding differs from wikipedia
 ;; https://en.wikipedia.org/wiki/Ackermann_function
 ;; But perhaps their definition is different?
+
+;; Exercise 1.11
+
+(define (f-recur n)
+  (if (< n 3)
+      n
+      (+ (f-recur (- n 1))
+         (* 2 (f-recur (- n 2)))
+         (* 3 (f-recur (- n 3))))))
+
+(f-recur 3) ; => 4
+
+;; f(2) + 2*f(1) + 3*f(0)
+;; 2 + 2*1 + 0
+
+(f-recur 4) ; => 11
+
+;; f(3) + 2*f(2) + 3*f(1)
+;; 4 + 2*2 + 3
+
+(f-recur 10)
+
+;; It's interesting to me how mechanical this process can be and that
+;; the state variables behave rather like a queue or perhaps a
+;; circular buffer
+(define (f-iter n)
+  (define (f-inner a b c count)
+    (if (= count 0)
+        c
+        (f-inner (+ a (* 2 b) (* 3 c))
+                 a
+                 b
+                 (- count 1))))
+  (f-inner 2 1 0 n))
