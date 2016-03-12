@@ -279,3 +279,38 @@
                  b
                  (- count 1))))
   (f-inner 2 1 0 n))
+
+;; Exercise 1.16
+;; even:
+;; a <- a
+;; b <- b^2
+;; n <- n / 2
+;;
+;; odd:
+;; a <- a * b
+;; b <- b
+;; n <- n - 1
+(define (square n)
+  (* n n))
+
+(define (even? n)
+  (= (remainder n 2) 0))
+
+(define (fast-expt-iter b n)
+  (define (inner a b n)
+    (cond ((= n 0)
+           a)
+          ((even? n)
+           (inner
+            a
+            (square b)
+            (/ n 2)))
+          (else
+           (inner
+            (* a b)
+            b
+            (- n 1)))))
+  (inner 1 b n)) 
+
+
+(fast-expt-iter 2 32) ;; => 4294967296
