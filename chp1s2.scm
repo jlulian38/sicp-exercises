@@ -298,19 +298,19 @@
 
 (define (fast-expt-iter b n)
   (define (inner a b n)
-    (cond ((= n 0)
-           a)
-          ((even? n)
-           (inner
-            a
-            (square b)
-            (/ n 2)))
-          (else
-           (inner
-            (* a b)
-            b
-            (- n 1)))))
-  (inner 1 b n)) 
+    (cond ((= n 0) a)
+          ((even? n) (inner
+                      a
+                      (square b)
+                      (/ n 2)))
+          (else (inner
+                 (* a b)
+                 b
+                 (- n 1)))))
+  (inner 1 b n))
 
+;; A remark for my future self and feeble mind. For non-zero x,y x/y != 0. What
+;; this means for the above function is that n will always pass through 1 before
+;; reaching 0.
 
 (fast-expt-iter 2 32) ;; => 4294967296
